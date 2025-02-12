@@ -1,0 +1,80 @@
+import { Optional } from "sequelize";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  CreatedAt,
+  UpdatedAt,
+  Scopes,
+  HasMany,
+} from "sequelize-typescript";
+
+interface UserAttributes {
+  id: string;
+  email: string;
+  hash_password: string;
+  db_status: "active" | "inactive";
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+
+@Scopes(() => ({
+  defaultScope: {
+    where: { db_status: "active" },
+    attributes: {
+      exclude: ["hash_password", "db_status"],
+    },
+  },
+}))
+@Table({
+  timestamps: true,
+  tableName: "users",
+  modelName: "User",
+})
+export default class User extends Model<
+  UserAttributes,
+  UserCreationAttributes
+> {
+  @Column({
+    primaryKey: true,
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
+  declare id: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare email: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare hash_password: string;
+
+  @Column({
+    type: DataType.ENUM("active", "inactive"),
+    allowNull: false,
+    defaultValue: "active",
+  })
+  declare db_status: "active" | "inactive";
+
+  @CreatedAt
+  declare created_at: Date;
+
+  @UpdatedAt
+  declare updated_at: Date;
+
+  // // Define association
+  // @HasMany(() => ThreadUser, {
+  //   sourceKey: "id",
+  //   foreignKey: { name: "user_id", allowNull: false },
+  //   as: "thread_users",
+  // })
+  // declare thread_users: ReturnType<() => ThreadUser[]>;
+}
