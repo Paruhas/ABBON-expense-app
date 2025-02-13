@@ -16,6 +16,7 @@ interface ExpenseAttributes {
   id?: string;
   title: string;
   amount: number;
+  date: string;
   note: string | null;
   db_status?: "active" | "inactive";
   createdAt?: Date;
@@ -59,6 +60,12 @@ export default class Expense extends Model<
     allowNull: false,
   })
   declare amount: number;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare date: string;
 
   @Column({
     type: DataType.STRING,

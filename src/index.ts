@@ -5,14 +5,15 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import compression from "compression";
 
+import { initDB } from "./service/initDB";
+
 import { homeMiddleware } from "./middleware/home";
 import { loggerMiddleware } from "./middleware/logger";
 import { errorMiddleware, pathErrorMiddleware } from "./middleware/error";
-import { initDB } from "./service/initDB";
-import userRouter from "./route/user.route";
+import authRoute from "./route/auth.route";
+import userRoute from "./route/user.route";
 
 const app = express();
-
 const PORT = process.env.PORT;
 
 app.use(
@@ -37,8 +38,10 @@ app.get("/", homeMiddleware);
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({ msg: "test" });
 });
-app.use("/user", userRouter);
+app.use("/auth", authRoute);
+app.use("/user", userRoute);
 app.use("/expense", () => {});
+app.use("/category", () => {});
 
 /* ===== ERROR ===== */
 app.use(errorMiddleware);
