@@ -11,33 +11,33 @@ import {
 } from "sequelize-typescript";
 import Expense from "./Expense.model";
 
-interface UserAttributes {
+interface CategoryAttributes {
   id?: string;
-  email: string;
-  hash_password: string;
+  name: string;
   db_status?: "active" | "inactive";
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+interface CategoryCreationAttributes
+  extends Optional<CategoryAttributes, "id"> {}
 
 @Scopes(() => ({
   defaultScope: {
     where: { db_status: "active" },
     attributes: {
-      exclude: ["hash_password", "db_status"],
+      exclude: ["db_status"],
     },
   },
 }))
 @Table({
   timestamps: true,
-  tableName: "users",
-  modelName: "User",
+  tableName: "categories",
+  modelName: "Category",
 })
-export default class User extends Model<
-  UserAttributes,
-  UserCreationAttributes
+export default class Category extends Model<
+  CategoryAttributes,
+  CategoryCreationAttributes
 > {
   @Column({
     primaryKey: true,
@@ -50,13 +50,7 @@ export default class User extends Model<
     type: DataType.STRING,
     allowNull: false,
   })
-  declare email: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  declare hash_password: string;
+  declare name: string;
 
   @Column({
     type: DataType.ENUM("active", "inactive"),
@@ -74,7 +68,7 @@ export default class User extends Model<
   // Define association
   @HasMany(() => Expense, {
     sourceKey: "id",
-    foreignKey: "user_id",
+    foreignKey: "category_id",
     as: "expense_list",
   })
   declare expense_list: ReturnType<() => Expense[]>;

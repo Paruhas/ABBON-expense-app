@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 
 const changeInput = (input: number) => (new Decimal(input).isNaN() ? 0 : input);
 
-export default {
+export const decimalExtended = {
   plus: (input1: number, input2: number) => {
     input1 = changeInput(input1 || 0);
     input2 = changeInput(input2 || 0);

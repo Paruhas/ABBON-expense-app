@@ -1,5 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import User from "./User.model";
+import Expense from "./Expense.model";
+import Category from "./Category.model";
 
 const sequelize = new Sequelize({
   dialect: process.env.DB_TYPE as
@@ -23,6 +25,6 @@ const sequelize = new Sequelize({
       : false,
 });
 
-sequelize.addModels([User]);
+sequelize.addModels([User, Expense, Category]);
 
 export default sequelize;

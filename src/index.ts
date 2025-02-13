@@ -1,20 +1,28 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import compression from "compression";
-import express, { NextFunction, Request, Response } from "express";
 
 import { homeMiddleware } from "./middleware/home";
 import { loggerMiddleware } from "./middleware/logger";
 import { errorMiddleware, pathErrorMiddleware } from "./middleware/error";
 import { initDB } from "./service/initDB";
+import userRouter from "./route/user.route";
 
 const app = express();
 
 const PORT = process.env.PORT;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    methods: process.env.CORS_METHODS?.split(","),
+    allowedHeaders: process.env.CORS_HEADERS,
+    credentials: process.env.CORS_CREDENTIALS === "true",
+  })
+);
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +37,8 @@ app.get("/", homeMiddleware);
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({ msg: "test" });
 });
+app.use("/user", userRouter);
+app.use("/expense", () => {});
 
 /* ===== ERROR ===== */
 app.use(errorMiddleware);
