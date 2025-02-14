@@ -11,6 +11,7 @@ import {
 } from "sequelize-typescript";
 import Expense from "./Expense.model";
 import { UserAttributes } from "../type/user.type";
+import Category from "./Category.model";
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 
@@ -18,7 +19,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
   defaultScope: {
     where: { db_status: "active" },
     attributes: {
-      exclude: ["db_status"],
+      exclude: ["db_status", "created_at", "updated_at"],
     },
   },
 }))
@@ -76,4 +77,11 @@ export default class User extends Model<
     as: "expense_list",
   })
   declare expense_list: ReturnType<() => Expense[]>;
+
+  @HasMany(() => Category, {
+    sourceKey: "id",
+    foreignKey: "user_id",
+    as: "category_list",
+  })
+  declare category_list: ReturnType<() => Expense[]>;
 }

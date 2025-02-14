@@ -8,9 +8,11 @@ import {
   UpdatedAt,
   Scopes,
   HasMany,
+  BelongsTo,
 } from "sequelize-typescript";
 import Expense from "./Expense.model";
 import { CategoryAttributes } from "../type/category.type";
+import User from "./User.model";
 
 interface CategoryCreationAttributes
   extends Optional<CategoryAttributes, "id"> {}
@@ -19,7 +21,7 @@ interface CategoryCreationAttributes
   defaultScope: {
     where: { db_status: "active" },
     attributes: {
-      exclude: ["db_status"],
+      exclude: ["db_status", "created_at", "updated_at"],
     },
   },
 }))
@@ -65,4 +67,11 @@ export default class Category extends Model<
     as: "expense_list",
   })
   declare expense_list: ReturnType<() => Expense[]>;
+
+  @BelongsTo(() => User, {
+    targetKey: "id",
+    foreignKey: { name: "user_id", allowNull: false },
+    as: "user_data",
+  })
+  declare user_id: string;
 }

@@ -61,25 +61,32 @@ export const errorMiddleware: ErrorRequestHandler = (
         resMessage = "Duplicate data.";
         break;
 
-      case "3011":
+      case "3002":
         httpCode = 400;
-        resCode = "3011";
+        resCode = "3002";
         resData = err.resData;
         resMessage = "Register fail.";
         break;
 
-      case "3021":
+      case "3003":
         httpCode = 400;
-        resCode = "3021";
+        resCode = "3003";
         resData = err.resData;
         resMessage = "Login fail.";
         break;
 
-      case "3031":
+      case "3004":
         httpCode = 400;
-        resCode = "3031";
+        resCode = "3004";
         resData = err.resData;
         resMessage = "Refresh fail.";
+        break;
+
+      case "3005":
+        httpCode = 400;
+        resCode = "2003";
+        resData = err.resData;
+        resMessage = "User not found.";
         break;
 
       case "4001":

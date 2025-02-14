@@ -9,14 +9,13 @@ import { userService } from "../service/user.service";
 import { consoleLog } from "../util/consoleLog";
 import { CustomError } from "../util/customError";
 
-export const apiKeyAuthentication = (
+export const apiKeyAuthentication = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const isValid = Value.Check(Type.String(), req.headers["x-api-key"]);
-
     if (!isValid || req.headers["x-api-key"] !== process.env.API_KEY) {
       throw new CustomError("1001", {});
     }

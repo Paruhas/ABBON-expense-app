@@ -17,14 +17,14 @@ export const refreshToken = async (
 
   try {
     const { user } = req;
-    if (!user) throw new CustomError("3031", {});
+    if (!user) throw new CustomError("3005", {});
 
     const accessToken = encodeJwt({ id: user.id, email: user.email }, "access");
     const refreshToken = encodeJwt(
       { id: user.id, email: user.email },
       "refresh"
     );
-    if (!accessToken || !refreshToken) throw new CustomError("3021", {});
+    if (!accessToken || !refreshToken) throw new CustomError("3003", {});
 
     const updateUser = await userService.updateUser(
       {
@@ -35,7 +35,7 @@ export const refreshToken = async (
       { id: user.id },
       { transaction: transaction }
     );
-    if (!updateUser) throw new CustomError("3021", {});
+    if (!updateUser) throw new CustomError("3003", {});
 
     await transaction.commit();
 

@@ -15,6 +15,7 @@ import {
 } from "./middleware/error.middleware";
 import authRoute from "./route/auth.route";
 import userRoute from "./route/user.route";
+import categoryRoute from "./route/category.route";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -43,8 +44,8 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
 });
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
+app.use("/category", categoryRoute);
 app.use("/expense", () => {});
-app.use("/category", () => {});
 
 /* ===== ERROR ===== */
 app.use(errorMiddleware);

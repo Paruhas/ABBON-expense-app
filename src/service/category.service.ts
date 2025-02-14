@@ -42,6 +42,19 @@ export const categoryService = {
     }
   },
 
+  createManyCategory: async (
+    data: CategoryAttributes[],
+    options?: Record<string, any>
+  ) => {
+    try {
+      return await Category.bulkCreate(data, options);
+    } catch (error) {
+      consoleLog("Error categoryService.createManyCategory:", error);
+
+      return 0;
+    }
+  },
+
   updateCategory: async (
     data: CategoryAttributes,
     where: Record<string, any>,

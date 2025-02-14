@@ -7,4 +7,7 @@ export interface ExpenseAttributes {
   db_status?: "active" | "inactive";
   createdAt?: Date;
   updatedAt?: Date;
+  // FK
+  user_id: string;
+  category_id: string;
 }

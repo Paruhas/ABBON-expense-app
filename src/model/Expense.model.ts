@@ -19,7 +19,7 @@ interface ExpenseCreationAttributes extends Optional<ExpenseAttributes, "id"> {}
   defaultScope: {
     where: { db_status: "active" },
     attributes: {
-      exclude: ["db_status"],
+      exclude: ["db_status", "created_at", "updated_at"],
     },
   },
 }))

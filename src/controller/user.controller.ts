@@ -8,6 +8,7 @@ import { userService } from "../service/user.service";
 import { consoleLog } from "../util/consoleLog";
 import { CustomError } from "../util/customError";
 import responseFormat from "../util/responseFormat";
+import { categoryService } from "../service/category.service";
 
 export const userRegister = async (
   req: Request,
@@ -20,7 +21,7 @@ export const userRegister = async (
     const { email, password } = req.body;
 
     const hashPassword = await generateHashPassword(password);
-    if (!hashPassword) throw new CustomError("3011", {});
+    if (!hashPassword) throw new CustomError("3002", {});
 
     const createPayload = {
       email,
@@ -34,14 +35,23 @@ export const userRegister = async (
 
     const accessToken = encodeJwt({ id: createNewUser.id, email }, "access");
     const refreshToken = encodeJwt({ id: createNewUser.id, email }, "refresh");
-    if (!accessToken || !refreshToken) throw new CustomError("3011", {});
+    if (!accessToken || !refreshToken) throw new CustomError("3002", {});
 
     const updateUser = await userService.updateUser(
       { ...createPayload, refresh_token: refreshToken },
       { id: createNewUser.id },
       { transaction: transaction }
     );
-    if (!updateUser) throw new CustomError("3011", {});
+    if (!updateUser) throw new CustomError("3002", {});
+
+    const addDefaultCategory = await categoryService.createManyCategory(
+      [
+        { name: "Food", user_id: createNewUser.id },
+        { name: "Transportation", user_id: createNewUser.id },
+      ],
+      { transaction: transaction }
+    );
+    if (!addDefaultCategory) throw new CustomError("4002", {});
 
     await transaction.commit();
 
@@ -72,17 +82,17 @@ export const userLogin = async (
     const { password } = req.body;
 
     const { user } = req;
-    if (!user) throw new CustomError("3021", {});
+    if (!user) throw new CustomError("3005", {});
 
     const isPasswordMatched = passwordVerify(password, user.hash_password);
-    if (!isPasswordMatched) throw new CustomError("3021", {});
+    if (!isPasswordMatched) throw new CustomError("3003", {});
 
     const accessToken = encodeJwt({ id: user.id, email: user.email }, "access");
     const refreshToken = encodeJwt(
       { id: user.id, email: user.email },
       "refresh"
     );
-    if (!accessToken || !refreshToken) throw new CustomError("3021", {});
+    if (!accessToken || !refreshToken) throw new CustomError("3003", {});
 
     const updateUser = await userService.updateUser(
       {
@@ -93,7 +103,7 @@ export const userLogin = async (
       { id: user.id },
       { transaction: transaction }
     );
-    if (!updateUser) throw new CustomError("3021", {});
+    if (!updateUser) throw new CustomError("3003", {});
 
     await transaction.commit();
 
@@ -120,7 +130,7 @@ export const userProfile = async (
 ) => {
   try {
     const { user } = req;
-    if (!user) throw new CustomError("3021", {});
+    if (!user) throw new CustomError("3005", {});
 
     res.status(200).json(
       responseFormat("0000", "success", "Get data success.", {
