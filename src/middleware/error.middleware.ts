@@ -67,6 +67,20 @@ export const errorMiddleware: ErrorRequestHandler = (
         resMessage = "Duplicate data.";
         break;
 
+      case "3011":
+        httpCode = 400;
+        resCode = "3011";
+        resData = err.resData;
+        resMessage = "Register fail.";
+        break;
+
+      case "3021":
+        httpCode = 400;
+        resCode = "3021";
+        resData = err.resData;
+        resMessage = "Login fail.";
+        break;
+
       case "4001":
         httpCode = 400;
         resCode = "4001";

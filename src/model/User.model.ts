@@ -18,7 +18,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
   defaultScope: {
     where: { db_status: "active" },
     attributes: {
-      exclude: ["hash_password", "db_status"],
+      exclude: ["db_status"],
     },
   },
 }))

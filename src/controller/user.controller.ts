@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import { generateHashPassword } from "../lib/bcrypt";
+import { generateHashPassword, passwordVerify } from "../lib/bcrypt";
 import { userService } from "../service/user.service";
 import { CustomError } from "../util/customError";
 import responseFormat from "../util/responseFormat";
 import { encodeJwt } from "../lib/jwt";
 import sequelize from "../model";
+import { ExtendedRequest } from "../type/req,type";
 
 export const userRegister = async (
   req: Request,
@@ -17,6 +18,7 @@ export const userRegister = async (
     const { email, password } = req.body;
 
     const hashPassword = await generateHashPassword(password);
+    if (!hashPassword) throw new CustomError("3011", {});
 
     const createPayload = {
       email,
@@ -30,19 +32,19 @@ export const userRegister = async (
 
     const accessToken = encodeJwt({ id: createNewUser.id, email }, "access");
     const refreshToken = encodeJwt({ id: createNewUser.id, email }, "refresh");
-    if (!accessToken || !refreshToken) throw new CustomError("4003", {});
+    if (!accessToken || !refreshToken) throw new CustomError("3011", {});
 
     const updateUser = await userService.updateUser(
       { ...createPayload, refresh_token: refreshToken },
       { id: createNewUser.id },
       { transaction: transaction }
     );
-    if (!updateUser) throw new CustomError("4003", {});
+    if (!updateUser) throw new CustomError("3011", {});
 
     await transaction.commit();
 
     res.status(200).json(
-      responseFormat("2001", "success", "Register success.", {
+      responseFormat("0000", "success", "Register success.", {
         id: createNewUser.id,
         email,
         accessToken,
@@ -51,6 +53,58 @@ export const userRegister = async (
     );
   } catch (error) {
     console.error("Error userRegister:", error);
+    await transaction.rollback();
+
+    next(error);
+  }
+};
+
+export const userLogin = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { password } = req.body;
+
+    const { user } = req;
+    if (!user) throw new CustomError("3021", {});
+
+    const isPasswordMatched = passwordVerify(password, user.hash_password);
+    if (!isPasswordMatched) throw new CustomError("3021", {});
+
+    const accessToken = encodeJwt({ id: user.id, email: user.email }, "access");
+    const refreshToken = encodeJwt(
+      { id: user.id, email: user.email },
+      "refresh"
+    );
+    if (!accessToken || !refreshToken) throw new CustomError("3021", {});
+
+    const updateUser = await userService.updateUser(
+      {
+        email: user.email,
+        hash_password: user.hash_password,
+        refresh_token: refreshToken,
+      },
+      { id: user.id },
+      { transaction: transaction }
+    );
+    if (!updateUser) throw new CustomError("3021", {});
+
+    await transaction.commit();
+
+    res.status(200).json(
+      responseFormat("0000", "success", "Login success.", {
+        id: user.id,
+        email: user.email,
+        accessToken,
+        refreshToken,
+      })
+    );
+  } catch (error) {
+    console.error("Error userLogin:", error);
     await transaction.rollback();
 
     next(error);

@@ -1,7 +1,10 @@
 import express from "express";
 import { apiKeyAuthentication } from "../middleware/auth.middleware";
-import { validateUserRegister } from "../middleware/user.middleware";
-import { userRegister } from "../controller/user.controller";
+import {
+  validateUserRegister,
+  validateUserLogin,
+} from "../middleware/user.middleware";
+import { userLogin, userRegister } from "../controller/user.controller";
 const authRoute = express.Router();
 
 authRoute.post(
@@ -10,6 +13,6 @@ authRoute.post(
   validateUserRegister,
   userRegister
 );
-authRoute.post("/login", () => {});
+authRoute.post("/login", apiKeyAuthentication, validateUserLogin, userLogin);
 
 export default authRoute;
