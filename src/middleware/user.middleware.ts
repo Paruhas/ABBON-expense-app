@@ -18,7 +18,6 @@ export const validateUserRegister = async (
     const isValid = Value.Check(TypeBox_UserRegister.body, req.body);
     if (!isValid) {
       const errors = [...Value.Errors(TypeBox_UserRegister.body, req.body)];
-      console.log("errors", errors);
       let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
@@ -57,7 +56,6 @@ export const validateUserLogin = async (
     const isValid = Value.Check(TypeBox_UserRegister.body, req.body);
     if (!isValid) {
       const errors = [...Value.Errors(TypeBox_UserRegister.body, req.body)];
-      console.log("errors", errors);
       let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
