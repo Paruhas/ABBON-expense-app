@@ -11,17 +11,7 @@ import {
 } from "sequelize-typescript";
 import User from "./User.model";
 import Category from "./Category.model";
-
-interface ExpenseAttributes {
-  id?: string;
-  title: string;
-  amount: number;
-  date: string;
-  note: string | null;
-  db_status?: "active" | "inactive";
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import { ExpenseAttributes } from "../type/expense.type";
 
 interface ExpenseCreationAttributes extends Optional<ExpenseAttributes, "id"> {}
 

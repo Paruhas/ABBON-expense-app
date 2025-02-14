@@ -1,17 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { Type, type Static } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
-import { CustomError } from "../util/customError";
-import { regexValidateEmail } from "../util/regexValidate";
 import { userService } from "../service/user.service";
 import { ExtendedRequest } from "../type/req,type";
-
-const RegisterType = {
-  body: Type.Object({
-    email: Type.String({ minLength: 8, maxLength: 100 }),
-    password: Type.String({ minLength: 8, maxLength: 32 }),
-  }),
-};
+import { TypeBox_UserRegister } from "../type/user.type";
+import { CustomError } from "../util/customError";
+import { regexValidateEmail } from "../util/regexValidate";
 
 export const validateUserRegister = async (
   req: Request,
@@ -21,9 +15,9 @@ export const validateUserRegister = async (
   try {
     const { email, password } = req.body;
 
-    const isValid = Value.Check(RegisterType.body, req.body);
+    const isValid = Value.Check(TypeBox_UserRegister.body, req.body);
     if (!isValid) {
-      const errors = [...Value.Errors(RegisterType.body, req.body)];
+      const errors = [...Value.Errors(TypeBox_UserRegister.body, req.body)];
       console.log("errors", errors);
       let errorArray: any[] = [];
 
@@ -60,9 +54,9 @@ export const validateUserLogin = async (
   try {
     const { email, password } = req.body;
 
-    const isValid = Value.Check(RegisterType.body, req.body);
+    const isValid = Value.Check(TypeBox_UserRegister.body, req.body);
     if (!isValid) {
-      const errors = [...Value.Errors(RegisterType.body, req.body)];
+      const errors = [...Value.Errors(TypeBox_UserRegister.body, req.body)];
       console.log("errors", errors);
       let errorArray: any[] = [];
 

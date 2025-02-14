@@ -10,14 +10,7 @@ import {
   HasMany,
 } from "sequelize-typescript";
 import Expense from "./Expense.model";
-
-interface CategoryAttributes {
-  id?: string;
-  name: string;
-  db_status?: "active" | "inactive";
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import { CategoryAttributes } from "../type/category.type";
 
 interface CategoryCreationAttributes
   extends Optional<CategoryAttributes, "id"> {}
