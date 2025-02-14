@@ -1,27 +1,30 @@
-import { NextFunction, Request, Response } from "express";
-import responseFormat from "../util/responseFormat";
-import { Type, Static } from "@sinclair/typebox";
+import { Request, Response, NextFunction } from "express";
+import { Type, type Static } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
 import { CustomError } from "../util/customError";
+import { regexValidateEmail } from "../util/regexValidate";
+import responseFormat from "../util/responseFormat";
+import { userService } from "../service/user.service";
 
 const RegisterType = {
   body: Type.Object({
-    username: Type.String({ minLength: 3, maxLength: 20 }),
-    password: Type.String({ minLength: 6 }),
+    email: Type.String({ minLength: 8, maxLength: 100 }),
+    password: Type.String({ minLength: 8, maxLength: 32 }),
   }),
 };
 
-export const validateUserRegister = (
+export const validateUserRegister = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { username, password } = req.body;
-    const isValid = Value.Check(RegisterType.body, req.body);
+    const { email, password } = req.body;
 
+    const isValid = Value.Check(RegisterType.body, req.body);
     if (!isValid) {
       const errors = [...Value.Errors(RegisterType.body, req.body)];
+      console.log("errors", errors);
       let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
@@ -36,21 +39,14 @@ export const validateUserRegister = (
       throw new CustomError("2001", errorArray);
     }
 
+    const isValidEmail = regexValidateEmail(email);
+    if (!isValidEmail) throw new CustomError("2002", ["email"]);
+
+    const usernameExists = await userService.findOneUser({ email: email });
+    if (usernameExists === 0) throw new CustomError("4001", {});
+    if (usernameExists) throw new CustomError("3001", ["email"]);
+
     next();
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const userRegister = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    console.log("userRegister");
-
-    res.status(200).json(responseFormat("0000", "success", "success", {}));
   } catch (error) {
     next(error);
   }

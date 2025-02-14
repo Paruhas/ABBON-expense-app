@@ -7,9 +7,12 @@ import compression from "compression";
 
 import { initDB } from "./service/initDB";
 
-import { homeMiddleware } from "./middleware/home";
-import { loggerMiddleware } from "./middleware/logger";
-import { errorMiddleware, pathErrorMiddleware } from "./middleware/error";
+import { homeMiddleware } from "./middleware/home.middleware";
+import { loggerMiddleware } from "./middleware/logger.middleware.";
+import {
+  errorMiddleware,
+  pathErrorMiddleware,
+} from "./middleware/error.middleware";
 import authRoute from "./route/auth.route";
 import userRoute from "./route/user.route";
 

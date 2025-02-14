@@ -10,15 +10,7 @@ import {
   HasMany,
 } from "sequelize-typescript";
 import Expense from "./Expense.model";
-
-interface UserAttributes {
-  id?: string;
-  email: string;
-  hash_password: string;
-  db_status?: "active" | "inactive";
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import { UserAttributes } from "../type/user.type";
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 
@@ -57,6 +49,12 @@ export default class User extends Model<
     allowNull: false,
   })
   declare hash_password: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare refresh_token: string;
 
   @Column({
     type: DataType.ENUM("active", "inactive"),

@@ -53,6 +53,48 @@ export const errorMiddleware: ErrorRequestHandler = (
         resMessage = "Validate error.";
         break;
 
+      case "2002":
+        httpCode = 400;
+        resCode = "2002";
+        resData = err.resData;
+        resMessage = "Invalid format.";
+        break;
+
+      case "3001":
+        httpCode = 400;
+        resCode = "3001";
+        resData = err.resData;
+        resMessage = "Duplicate data.";
+        break;
+
+      case "4001":
+        httpCode = 400;
+        resCode = "4001";
+        resData = err.resData;
+        resMessage = "GET data fail.";
+        break;
+
+      case "4002":
+        httpCode = 400;
+        resCode = "4002";
+        resData = err.resData;
+        resMessage = "POST data fail.";
+        break;
+
+      case "4003":
+        httpCode = 400;
+        resCode = "4003";
+        resData = err.resData;
+        resMessage = "PUT data fail.";
+        break;
+
+      case "4004":
+        httpCode = 400;
+        resCode = "4004";
+        resData = err.resData;
+        resMessage = "DELETE data fail.";
+        break;
+
       default:
         break;
     }
