@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import ms from "ms";
+
 import { consoleLog } from "../util/consoleLog";
 
 export const encodeJwt = (

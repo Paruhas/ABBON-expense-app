@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { Type, type Static } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
+
 import { userService } from "../service/user.service";
-import { ExtendedRequest } from "../type/req,type";
+import { ExtendedRequest } from "../type/req.type";
 import { TypeBox_UserRegister } from "../type/user.type";
+import { consoleLog } from "../util/consoleLog";
 import { CustomError } from "../util/customError";
 import { regexValidateEmail } from "../util/regexValidate";
 
@@ -41,6 +42,8 @@ export const validateUserRegister = async (
 
     next();
   } catch (error) {
+    consoleLog("Error validateUserRegister:", error);
+
     next(error);
   }
 };
@@ -83,6 +86,8 @@ export const validateUserLogin = async (
 
     next();
   } catch (error) {
+    consoleLog("Error validateUserLogin:", error);
+
     next(error);
   }
 };

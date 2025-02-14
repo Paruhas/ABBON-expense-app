@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+
 import { consoleLog } from "../util/consoleLog";
 
 export const generateHashPassword = async (password: string) => {

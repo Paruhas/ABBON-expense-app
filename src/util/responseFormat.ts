@@ -14,25 +14,23 @@ function responseFormat(
   message: string,
   data: any = {}
 ) {
-  try {
-    let responseObject: responseObjectType;
+  let responseObject: responseObjectType;
 
-    switch (type) {
-      case "success":
-        responseObject = response_success(code, message, data);
-        break;
+  switch (type) {
+    case "success":
+      responseObject = response_success(code, message, data);
+      break;
 
-      case "error":
-        responseObject = response_error(code, message, data);
-        break;
+    case "error":
+      responseObject = response_error(code, message, data);
+      break;
 
-      default:
-        responseObject = response_error("9999", "ERROR.", {});
-        break;
-    }
+    default:
+      responseObject = response_error("9999", "ERROR.", {});
+      break;
+  }
 
-    return responseObject;
-  } catch (error) {}
+  return responseObject;
 }
 
 function response_success(
@@ -49,7 +47,11 @@ function response_success(
   };
 }
 
-function response_error(code: string, message: string = "ERROR.", data: any) {
+function response_error(
+  code: string,
+  message: string = "ERROR.",
+  data: any
+): responseObjectType {
   return {
     res_code: code || "9999",
     res_type: "error",

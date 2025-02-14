@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
-import responseFormat from "../util/responseFormat";
+
 import { CustomError } from "../util/customError";
+import responseFormat from "../util/responseFormat";
 
 export const errorMiddleware: ErrorRequestHandler = (
   err: Error | CustomError,
@@ -12,19 +13,6 @@ export const errorMiddleware: ErrorRequestHandler = (
   let resCode = "9999";
   let resData = {};
   let resMessage = "No message found.";
-
-  console.log("err", err);
-
-  // if (err.name === "TokenExpiredError" || err.name === "JsonWebTokenError") {
-  //   resCode = "1001";
-  //   httpCode = 401;
-  // }
-  // if (
-  //   err.name === "SequelizeValidationError" ||
-  //   err.name === "SequelizeUniqueConstraintError"
-  // ) {
-  //   httpCode = 400;
-  // }
 
   if (err instanceof CustomError) {
     switch (err.message) {
@@ -79,6 +67,13 @@ export const errorMiddleware: ErrorRequestHandler = (
         resCode = "3021";
         resData = err.resData;
         resMessage = "Login fail.";
+        break;
+
+      case "3031":
+        httpCode = 400;
+        resCode = "3031";
+        resData = err.resData;
+        resMessage = "Refresh fail.";
         break;
 
       case "4001":

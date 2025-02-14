@@ -1,6 +1,9 @@
 import { readFileSync } from "fs";
-const homePage = readFileSync("./public/home.html", "utf8");
 import { NextFunction, Request, Response } from "express";
+
+const homePage = readFileSync("./public/home.html", "utf8");
+
+import { consoleLog } from "../util/consoleLog";
 
 export const homeMiddleware = (
   req: Request,
@@ -10,6 +13,8 @@ export const homeMiddleware = (
   try {
     res.send(homePage);
   } catch (error) {
+    consoleLog("Error homeMiddleware:", error);
+
     next(error);
   }
 };

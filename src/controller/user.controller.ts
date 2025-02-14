@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from "express";
+
+import sequelize from "../model";
 import { generateHashPassword, passwordVerify } from "../lib/bcrypt";
+import { encodeJwt } from "../lib/jwt";
+import { ExtendedRequest } from "../type/req.type";
 import { userService } from "../service/user.service";
+import { consoleLog } from "../util/consoleLog";
 import { CustomError } from "../util/customError";
 import responseFormat from "../util/responseFormat";
-import { encodeJwt } from "../lib/jwt";
-import sequelize from "../model";
-import { ExtendedRequest } from "../type/req,type";
-import { consoleLog } from "../util/consoleLog";
 
 export const userRegister = async (
   req: Request,
@@ -107,6 +108,28 @@ export const userLogin = async (
   } catch (error) {
     consoleLog("Error userLogin:", error);
     await transaction.rollback();
+
+    next(error);
+  }
+};
+
+export const userProfile = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { user } = req;
+    if (!user) throw new CustomError("3021", {});
+
+    res.status(200).json(
+      responseFormat("0000", "success", "Get data success.", {
+        id: user.id,
+        email: user.email,
+      })
+    );
+  } catch (error) {
+    consoleLog("Error userLogin:", error);
 
     next(error);
   }
