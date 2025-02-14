@@ -36,7 +36,12 @@ export const expenseService = {
     options?: Record<string, any>
   ) => {
     try {
-      return await Expense.findAll({ where: where, limit, offset, ...options });
+      return await Expense.findAndCountAll({
+        where: where,
+        limit,
+        offset,
+        ...options,
+      });
     } catch (error) {
       consoleLog("Error expenseService.findAllExpensePagination:", error);
 

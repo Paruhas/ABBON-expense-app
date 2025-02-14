@@ -16,6 +16,7 @@ import {
 import authRoute from "./route/auth.route";
 import userRoute from "./route/user.route";
 import categoryRoute from "./route/category.route";
+import expenseRoute from "./route/expense.route";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -45,7 +46,8 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/category", categoryRoute);
-app.use("/expense", () => {});
+app.use("/expense", expenseRoute);
+app.use("/report", () => {});
 
 /* ===== ERROR ===== */
 app.use(errorMiddleware);
