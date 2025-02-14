@@ -25,13 +25,19 @@ export const errorMiddleware: ErrorRequestHandler = (
       case "1002":
         httpCode = 401;
         resCode = "1002";
-        resMessage = "Unauthorized, invalid Token.";
+        resMessage = "Unauthorized, invalid access token.";
         break;
 
       case "1003":
         httpCode = 403;
         resCode = "1003";
-        resMessage = "Forbidden, invalid Token.";
+        resMessage = "Forbidden, access token expire.";
+        break;
+
+      case "1004":
+        httpCode = 401;
+        resCode = "1004";
+        resMessage = "Unauthorized, invalid refresh token.";
         break;
 
       case "2001":

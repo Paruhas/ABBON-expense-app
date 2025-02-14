@@ -64,19 +64,22 @@ export const validateRefreshToken = async (
   next: NextFunction
 ) => {
   try {
-    const { authorization } = req.headers;
-    if (!authorization) throw new CustomError("1002", {});
+    const isValid = Value.Check(Type.String(), req.headers["x-refresh-token"]);
 
-    const token = authorization.replace("Bearer ", "");
+    if (!isValid) {
+      throw new CustomError("1004", {});
+    }
+    const token = req.headers["x-refresh-token"] as unknown as string;
+
     const data = decodeJwt(token, "refresh");
-    if (!data) throw new CustomError("1002", {});
+    if (!data) throw new CustomError("1004", {});
 
     const { id } = data as JwtPayload;
-    if (!id) throw new CustomError("1002", {});
+    if (!id) throw new CustomError("1004", {});
 
     const userData = await userService.findOneUser({ id: id }, { raw: true });
     if (!userData) throw new CustomError("4001", {});
-    if (userData.refresh_token !== token) throw new CustomError("1002", {});
+    if (userData.refresh_token !== token) throw new CustomError("1004", {});
 
     req.user = userData;
 
