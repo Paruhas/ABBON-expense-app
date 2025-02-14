@@ -1,5 +1,6 @@
 import User from "../model/User.model";
 import { UserAttributes } from "../type/user.type";
+import { consoleLog } from "../util/consoleLog";
 
 export const userService = {
   findOneUser: async (
@@ -9,7 +10,7 @@ export const userService = {
     try {
       return await User.findOne({ where: where, ...options });
     } catch (error) {
-      console.error("Error userService.findOneUser:", error);
+      consoleLog("Error userService.findOneUser:", error);
 
       return 0;
     }
@@ -19,7 +20,7 @@ export const userService = {
     try {
       return await User.create(data, options);
     } catch (error) {
-      console.error("Error userService.createUser:", error);
+      consoleLog("Error userService.createUser:", error);
 
       return 0;
     }
@@ -33,7 +34,7 @@ export const userService = {
     try {
       return await User.update(data, { where: where, ...options });
     } catch (error) {
-      console.error("Error userService.updateUser:", error);
+      consoleLog("Error userService.updateUser:", error);
 
       return 0;
     }

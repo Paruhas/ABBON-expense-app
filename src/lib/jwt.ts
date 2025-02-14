@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import ms from "ms";
+import { consoleLog } from "../util/consoleLog";
 
 export const encodeJwt = (
   data: Record<string, any>,
@@ -51,7 +52,7 @@ export const encodeJwt = (
 
     return token;
   } catch (error) {
-    console.log("Error encodeJwt:", error);
+    consoleLog("Error encodeJwt:", error);
 
     return 0;
   }
@@ -90,7 +91,7 @@ export const decodeJwt = (token: string, type: "access" | "refresh") => {
 
     return data;
   } catch (error) {
-    console.log("Error decodeJwt:", error);
+    consoleLog("Error decodeJwt:", error);
 
     return 0;
   }

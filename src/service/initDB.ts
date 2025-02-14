@@ -1,4 +1,5 @@
 import sequelize from "../model";
+import { consoleLog } from "../util/consoleLog";
 
 export const initDB = async (forceMode: boolean) => {
   try {
@@ -7,7 +8,8 @@ export const initDB = async (forceMode: boolean) => {
 
     return true;
   } catch (error) {
-    console.log("Error initDB: ", error);
+    consoleLog("Error initDB: ", error);
+
     return false;
   }
 };

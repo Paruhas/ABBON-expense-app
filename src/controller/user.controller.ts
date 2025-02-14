@@ -6,6 +6,7 @@ import responseFormat from "../util/responseFormat";
 import { encodeJwt } from "../lib/jwt";
 import sequelize from "../model";
 import { ExtendedRequest } from "../type/req,type";
+import { consoleLog } from "../util/consoleLog";
 
 export const userRegister = async (
   req: Request,
@@ -52,7 +53,7 @@ export const userRegister = async (
       })
     );
   } catch (error) {
-    console.error("Error userRegister:", error);
+    consoleLog("Error userRegister:", error);
     await transaction.rollback();
 
     next(error);
@@ -104,7 +105,7 @@ export const userLogin = async (
       })
     );
   } catch (error) {
-    console.error("Error userLogin:", error);
+    consoleLog("Error userLogin:", error);
     await transaction.rollback();
 
     next(error);

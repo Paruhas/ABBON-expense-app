@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { consoleLog } from "../util/consoleLog";
 
 export const generateHashPassword = async (password: string) => {
   try {
@@ -7,7 +8,8 @@ export const generateHashPassword = async (password: string) => {
       parseInt(process.env.BCRYPT_SALT as unknown as string)
     );
   } catch (error) {
-    console.error("Error generateHashPassword: ", error);
+    consoleLog("Error generateHashPassword: ", error);
+
     return 0;
   }
 };
@@ -16,7 +18,8 @@ export const passwordVerify = async (value: string, hashValue: string) => {
   try {
     return await bcrypt.compare(value, hashValue);
   } catch (error) {
-    console.error("Error passwordVerify: ", error);
+    consoleLog("Error passwordVerify: ", error);
+
     return 0;
   }
 };
