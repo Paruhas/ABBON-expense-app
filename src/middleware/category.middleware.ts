@@ -99,12 +99,15 @@ export const editCategoryValidate = async (
       throw new CustomError("2001", errorArray);
     }
 
-    const categoryExists = await categoryService.findOneCategory({
-      name: name,
-      user_id: user.id,
-    });
+    const [categoryExists, category] = await Promise.all([
+      categoryService.findOneCategory({ name: name, user_id: user.id }),
+      categoryService.findOneCategory({ id: id, user_id: user.id }),
+    ]);
     if (categoryExists === 0) throw new CustomError("4001", {});
     if (categoryExists) throw new CustomError("3001", ["name"]);
+    if (!category) throw new CustomError("4001", {});
+
+    req.category = category;
 
     next();
   } catch (error) {

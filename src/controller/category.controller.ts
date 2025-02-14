@@ -81,17 +81,18 @@ export const editCategory = async (
 
   try {
     const { name } = req.body;
-    const { id } = req.params;
 
     const { user } = req;
     if (!user) throw new CustomError("3005", {});
+    const { category } = req;
+    if (!category) throw new CustomError("3006", {});
 
     const editCategory = await categoryService.updateCategory(
       {
         name: name,
         user_id: user.id as string,
       },
-      { id, user_id: user.id },
+      { id: category.id, user_id: user.id },
       { transaction: transaction }
     );
     if (!editCategory) throw new CustomError("4002", {});
@@ -100,7 +101,7 @@ export const editCategory = async (
 
     res.status(200).json(
       responseFormat("0000", "success", "Put data success.", {
-        id: id,
+        id: category.id,
         name: name,
       })
     );

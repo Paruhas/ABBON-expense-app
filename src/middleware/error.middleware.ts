@@ -84,9 +84,16 @@ export const errorMiddleware: ErrorRequestHandler = (
 
       case "3005":
         httpCode = 400;
-        resCode = "2003";
+        resCode = "3005";
         resData = err.resData;
         resMessage = "User not found.";
+        break;
+
+      case "3006":
+        httpCode = 400;
+        resCode = "3006";
+        resData = err.resData;
+        resMessage = "Category not found.";
         break;
 
       case "4001":
