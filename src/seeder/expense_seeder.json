@@ -1,0 +1,172 @@
+[
+  {
+    "id": "7da56096-2d96-41be-bcbb-85fdd106c5b6",
+    "title": "Bus",
+    "amount": 8.5,
+    "date": "1739379600000",
+    "note": "Go to mall",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:24:01Z",
+    "updated_at": "2025-02-15T11:24:01Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014",
+    "category_id": "3b3b75af-62c4-4d56-8747-0b4e00273f9d"
+  },
+  {
+    "id": "145fb64d-f418-4b9b-b8be-a47914af051f",
+    "title": "Grocery Shopping",
+    "amount": 100.0,
+    "date": "1739379600000",
+    "note": "Buy some food",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:24:02Z",
+    "updated_at": "2025-02-15T11:24:02Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014",
+    "category_id": "96e09582-02fc-44bf-93bd-727289f58049"
+  },
+  {
+    "id": "dbde4c87-c974-40f6-913b-245690b75a8d",
+    "title": "Bus",
+    "amount": 8.5,
+    "date": "1739379600000",
+    "note": "back home",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:24:03Z",
+    "updated_at": "2025-02-15T11:24:03Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014",
+    "category_id": "3b3b75af-62c4-4d56-8747-0b4e00273f9d"
+  },
+
+  {
+    "id": "d62e1267-83bb-4d79-acf0-95411c151157",
+    "title": "Bike",
+    "amount": 60.0,
+    "date": "1739466000000",
+    "note": "Go to mall",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:24:04Z",
+    "updated_at": "2025-02-15T11:24:04Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014",
+    "category_id": "3b3b75af-62c4-4d56-8747-0b4e00273f9d"
+  },
+  {
+    "id": "0c1a7ff7-3fb5-4106-bcab-e289f5ee9aea",
+    "title": "Grocery Shopping",
+    "amount": 500.25,
+    "date": "1739466000000",
+    "note": "Buy some food",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:24:05Z",
+    "updated_at": "2025-02-15T11:24:05Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014",
+    "category_id": "96e09582-02fc-44bf-93bd-727289f58049"
+  },
+
+  {
+    "id": "5b0a34d9-9eaa-4b2b-b578-d3a13aebfeb4",
+    "title": "Taxi",
+    "amount": 134.0,
+    "date": "1739466000000",
+    "note": "back home",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:24:06Z",
+    "updated_at": "2025-02-15T11:24:06Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014",
+    "category_id": "3b3b75af-62c4-4d56-8747-0b4e00273f9d"
+  },
+  {
+    "id": "9a2c67ad-6a09-4c86-ac96-52064c8fd47f",
+    "title": "Grab Food",
+    "amount": 300.0,
+    "date": "1738342800000",
+    "note": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:31:42Z",
+    "updated_at": "2025-02-15T11:31:42Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "5868af52-f2cd-4bbc-8798-05af76198f9e"
+  },
+  {
+    "id": "74f15ad8-f262-4fc3-8707-946002f81983",
+    "title": "Electric Bill",
+    "amount": 834.65,
+    "date": "1738342800000",
+    "note": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:34:36Z",
+    "updated_at": "2025-02-15T11:34:36Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "e78c5f68-fe2c-418f-a5ce-9d196f502150"
+  },
+  {
+    "id": "020abe11-e6f0-4958-bc8c-d8a03ce629bf",
+    "title": "Water Bill",
+    "amount": 300.23,
+    "date": "1738429200000",
+    "note": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:35:16Z",
+    "updated_at": "2025-02-15T11:35:16Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "e78c5f68-fe2c-418f-a5ce-9d196f502150"
+  },
+  {
+    "id": "41903f34-952b-4b8e-8471-59baf898c418",
+    "title": "Taxi",
+    "amount": 200.0,
+    "date": "1738515600000",
+    "note": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:36:00Z",
+    "updated_at": "2025-02-15T11:36:00Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "d0dfef5b-fb58-44b5-ae77-614af6ae4ca9"
+  },
+  {
+    "id": "af3cb4a1-1b12-427a-bb28-b8efa150e52c",
+    "title": "Mobile Bill",
+    "amount": 200.0,
+    "date": "1738515600000",
+    "note": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:36:29Z",
+    "updated_at": "2025-02-15T11:36:29Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "e78c5f68-fe2c-418f-a5ce-9d196f502150"
+  },
+  {
+    "id": "fa027572-55f3-422b-a964-69aa30187ad9",
+    "title": "Lotus",
+    "amount": 1500.0,
+    "date": "1738515600000",
+    "note": "buy some food ingredient",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:37:23Z",
+    "updated_at": "2025-02-15T11:37:23Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "e78c5f68-fe2c-418f-a5ce-9d196f502150"
+  },
+  {
+    "id": "e2fdd904-86e5-44b4-9fb8-47266cf85e4e",
+    "title": "Bus",
+    "amount": 20.0,
+    "date": "1738515600000",
+    "note": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:38:36Z",
+    "updated_at": "2025-02-15T11:38:36Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "d0dfef5b-fb58-44b5-ae77-614af6ae4ca9"
+  },
+  {
+    "id": "a1dbf5a6-7a91-4fd6-b09d-23012d81f16f",
+    "title": "Grab Bike",
+    "amount": 50.0,
+    "date": "1738515600000",
+    "note": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:38:43Z",
+    "updated_at": "2025-02-15T11:38:43Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "category_id": "d0dfef5b-fb58-44b5-ae77-614af6ae4ca9"
+  }
+]

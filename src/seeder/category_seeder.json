@@ -1,0 +1,42 @@
+[
+  {
+    "id": "96e09582-02fc-44bf-93bd-727289f58049",
+    "name": "Food",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:02:30Z",
+    "updated_at": "2025-02-15T11:02:30Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014"
+  },
+  {
+    "id": "3b3b75af-62c4-4d56-8747-0b4e00273f9d",
+    "name": "Transportation",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:02:30Z",
+    "updated_at": "2025-02-15T11:02:30Z",
+    "user_id": "478a982f-5d73-444b-b385-e0cd83091014"
+  },
+  {
+    "id": "5868af52-f2cd-4bbc-8798-05af76198f9e",
+    "name": "Food",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:02:35Z",
+    "updated_at": "2025-02-15T11:02:35Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132"
+  },
+  {
+    "id": "d0dfef5b-fb58-44b5-ae77-614af6ae4ca9",
+    "name": "Transportation",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:02:35Z",
+    "updated_at": "2025-02-15T11:02:35Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132"
+  },
+  {
+    "id": "e78c5f68-fe2c-418f-a5ce-9d196f502150",
+    "name": "Bill",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:29:21Z",
+    "updated_at": "2025-02-15T11:29:21Z",
+    "user_id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132"
+  }
+]

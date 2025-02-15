@@ -19,6 +19,7 @@ import userRoute from "./route/user.route";
 import categoryRoute from "./route/category.route";
 import expenseRoute from "./route/expense.route";
 import reportRoute from "./route/report.route";
+import { seederDataCreate } from "./lib/seederDataCreate";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -60,9 +61,13 @@ app.listen(PORT, async () => {
     const dbPass = await initDB(
       process.env.DB_SYNC_MODE === "true" ? true : false
     );
-
     if (!dbPass) {
       throw new Error("DB connection failed");
+    }
+
+    const createSeeder = await seederDataCreate();
+    if (!createSeeder) {
+      throw new Error("Create seeder failed");
     }
 
     console.log(

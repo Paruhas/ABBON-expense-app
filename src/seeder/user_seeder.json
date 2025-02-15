@@ -1,0 +1,20 @@
+[
+  {
+    "id": "478a982f-5d73-444b-b385-e0cd83091014",
+    "email": "seeder001@mail.com",
+    "hash_password": "$2b$10$PUcegNddewAcv1Zl/BfS5uMViCpNzm9rbAGV3i1FGh/dwiBMNpgwC",
+    "refresh_token": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:02:30Z",
+    "updated_at": "2025-02-15T11:02:30Z"
+  },
+  {
+    "id": "8e4d5e46-4223-4dc2-a1fe-4848c0381132",
+    "email": "seeder002@mail.com",
+    "hash_password": "$2b$10$jIqAvS9jXeTQNzwaaA1oGelJdaa4bxzrdSeG4gzbZshm9uKpT.dUq",
+    "refresh_token": "",
+    "db_status": "active",
+    "created_at": "2025-02-15T11:02:35Z",
+    "updated_at": "2025-02-15T11:02:35Z"
+  }
+]

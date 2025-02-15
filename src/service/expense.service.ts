@@ -62,6 +62,19 @@ export const expenseService = {
     }
   },
 
+  createManyExpense: async (
+    data: ExpenseAttributes[],
+    options?: Record<string, any>
+  ) => {
+    try {
+      return await Expense.bulkCreate(data, options);
+    } catch (error) {
+      consoleLog("Error expenseService.createManyExpense:", error);
+
+      return 0;
+    }
+  },
+
   updateExpense: async (
     data: ExpenseAttributes,
     where: Record<string, any>,

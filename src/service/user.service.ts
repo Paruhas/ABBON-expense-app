@@ -16,11 +16,37 @@ export const userService = {
     }
   },
 
+  findAllUser: async (
+    where: Record<string, any>,
+    options?: Record<string, any>
+  ) => {
+    try {
+      return await User.findAll({ where: where, ...options });
+    } catch (error) {
+      consoleLog("Error userService.findAllUser:", error);
+
+      return 0;
+    }
+  },
+
   createUser: async (data: UserAttributes, options?: Record<string, any>) => {
     try {
       return await User.create(data, options);
     } catch (error) {
       consoleLog("Error userService.createUser:", error);
+
+      return 0;
+    }
+  },
+
+  createManyUser: async (
+    data: UserAttributes[],
+    options?: Record<string, any>
+  ) => {
+    try {
+      return await User.bulkCreate(data, options);
+    } catch (error) {
+      consoleLog("Error userService.createManyUser:", error);
 
       return 0;
     }
