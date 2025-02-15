@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 const homePage = readFileSync("./public/home.html", "utf8");
 

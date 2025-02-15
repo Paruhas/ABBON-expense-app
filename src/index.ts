@@ -13,10 +13,12 @@ import {
   errorMiddleware,
   pathErrorMiddleware,
 } from "./middleware/error.middleware";
+
 import authRoute from "./route/auth.route";
 import userRoute from "./route/user.route";
 import categoryRoute from "./route/category.route";
 import expenseRoute from "./route/expense.route";
+import reportRoute from "./route/report.route";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -47,7 +49,7 @@ app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/category", categoryRoute);
 app.use("/expense", expenseRoute);
-app.use("/report", () => {});
+app.use("/report", reportRoute);
 
 /* ===== ERROR ===== */
 app.use(errorMiddleware);
