@@ -29,6 +29,19 @@ export const expenseService = {
     }
   },
 
+  findAllExpenseUnscope: async (
+    where: Record<string, any>,
+    options?: Record<string, any>
+  ) => {
+    try {
+      return await Expense.unscoped().findAll({ where: where, ...options });
+    } catch (error) {
+      consoleLog("Error expenseService.findAllExpenseUnscope:", error);
+
+      return 0;
+    }
+  },
+
   findAllExpensePagination: async (
     where: Record<string, any>,
     limit: number,

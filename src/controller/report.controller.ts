@@ -23,7 +23,7 @@ export const reportExpense = async (
     //   user_id: user.id as string,
     //   date: { [Op.gte]: Number(start), [Op.lte]: Number(end) },
     // });
-    const report = await expenseService.findAllExpense(
+    const report = await expenseService.findAllExpenseUnscope(
       {
         user_id: user.id as string,
         date: { [Op.gte]: Number(start), [Op.lte]: Number(end) },
