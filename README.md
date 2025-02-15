@@ -71,3 +71,7 @@ CORS_METHODS=GET,POST,PUT,PATCH,DELETE,OPTIONS
 CORS_HEADERS=*
 CORS_CREDENTIALS=true
 ```
+
+## Database ER diagram
+
+![Screenshot of Database ER diagram.](/assets/images/database_diagram.png)
