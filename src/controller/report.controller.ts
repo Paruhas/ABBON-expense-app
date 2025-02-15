@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
+import { Op, Sequelize } from "sequelize";
 
+import Category from "../model/Category.model";
+import { expenseService } from "../service/expense.service";
 import { ExtendedRequest } from "../type/req.type";
 import { consoleLog } from "../util/consoleLog";
 import { CustomError } from "../util/customError";
 import responseFormat from "../util/responseFormat";
-import { expenseService } from "../service/expense.service";
-import Category from "../model/Category.model";
-import { Op, Sequelize } from "sequelize";
 
 export const reportExpense = async (
   req: ExtendedRequest,
