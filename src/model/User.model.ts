@@ -21,6 +21,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
     attributes: {
       exclude: ["db_status", "created_at", "updated_at"],
     },
+    order: [["created_at", "ASC"]],
   },
 }))
 @Table({

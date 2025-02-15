@@ -23,6 +23,7 @@ interface CategoryCreationAttributes
     attributes: {
       exclude: ["db_status", "created_at", "updated_at"],
     },
+    order: [["created_at", "ASC"]],
   },
 }))
 @Table({
