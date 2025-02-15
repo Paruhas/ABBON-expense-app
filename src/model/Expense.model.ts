@@ -48,6 +48,9 @@ export default class Expense extends Model<
   @Column({
     type: DataType.DECIMAL(10, 2),
     allowNull: false,
+    get() {
+      return parseFloat(this.getDataValue("amount"));
+    },
   })
   declare amount: number;
 

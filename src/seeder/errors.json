@@ -1,0 +1,25 @@
+{
+  "1001": { "httpCode": 401, "resMessage": "Invalid API key." },
+  "1002": {
+    "httpCode": 401,
+    "resMessage": "Unauthorized, invalid access token."
+  },
+  "1003": { "httpCode": 403, "resMessage": "Forbidden, access token expired." },
+  "1004": {
+    "httpCode": 401,
+    "resMessage": "Unauthorized, invalid refresh token."
+  },
+  "2001": { "httpCode": 400, "resMessage": "Validate error." },
+  "2002": { "httpCode": 400, "resMessage": "Invalid format." },
+  "3001": { "httpCode": 400, "resMessage": "Duplicate data." },
+  "3002": { "httpCode": 400, "resMessage": "Register fail." },
+  "3003": { "httpCode": 400, "resMessage": "Login fail." },
+  "3004": { "httpCode": 400, "resMessage": "Refresh fail." },
+  "3005": { "httpCode": 400, "resMessage": "User not found." },
+  "3006": { "httpCode": 400, "resMessage": "Category not found." },
+  "3007": { "httpCode": 400, "resMessage": "Expense not found." },
+  "4001": { "httpCode": 400, "resMessage": "GET data fail." },
+  "4002": { "httpCode": 400, "resMessage": "POST data fail." },
+  "4003": { "httpCode": 400, "resMessage": "PUT data fail." },
+  "4004": { "httpCode": 400, "resMessage": "DELETE data fail." }
+}

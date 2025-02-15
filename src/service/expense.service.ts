@@ -75,4 +75,18 @@ export const expenseService = {
       return 0;
     }
   },
+
+  fakeDeleteExpense: async (
+    data: { db_status: "inactive" },
+    where: Record<string, any>,
+    options?: Record<string, any>
+  ) => {
+    try {
+      return await Expense.update(data, { where: where, ...options });
+    } catch (error) {
+      consoleLog("Error expenseService.updateExpense:", error);
+
+      return 0;
+    }
+  },
 };

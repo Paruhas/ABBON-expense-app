@@ -12,9 +12,12 @@ import { regexValidateUUID } from "../util/regexValidate";
 import dayjs from "../lib/dayjsExtended";
 import {
   TypeBox_addExpense,
+  TypeBox_deleteExpense,
+  TypeBox_editExpense,
   TypeBox_getAllExpense,
 } from "../type/expense.type";
 import { categoryService } from "../service/category.service";
+import { expenseService } from "../service/expense.service";
 
 export const getAllExpenseValidate = async (
   req: ExtendedRequest,
@@ -22,7 +25,7 @@ export const getAllExpenseValidate = async (
   next: NextFunction
 ) => {
   try {
-    const { page, limit, category_id, start, end } = req.query;
+    const { page, limit, category_id, start, end, sort } = req.query;
 
     const { user } = req;
     if (!user) throw new CustomError("3005", {});
@@ -49,6 +52,7 @@ export const getAllExpenseValidate = async (
       start: Number(req.query.start),
       end: Number(req.query.end),
     };
+
     if (isNaN(parseQuery.page) || parseQuery.page < 1) {
       errorArray.push({
         params: "page",
@@ -95,6 +99,30 @@ export const getAllExpenseValidate = async (
             "Must be string of number as date unix millisecond format and greater than start.",
         }
       );
+    }
+    if (sort && typeof sort === "string") {
+      const orderArray: any[] = [];
+      const sortArray = sort.split(",");
+
+      for (let x = 0; x < sortArray.length; x++) {
+        const dX = sortArray[x];
+
+        if (dX.startsWith("+") || dX.startsWith("-")) {
+          orderArray.push([
+            dX.replace(/[+-]/g, "").trim(),
+            dX.startsWith("+") ? "ASC" : "DESC",
+          ]);
+        }
+      }
+
+      if (!orderArray.length) {
+        errorArray.push({
+          params: "sort",
+          error:
+            "Format must be %2Bfield or -field and separated by comma (example : %2Bid,-title for id ASC and title DESC).",
+        });
+      }
+      req.query.order = orderArray;
     }
 
     if (errorArray.length > 0) {
@@ -176,6 +204,153 @@ export const addExpenseValidate = async (
     next();
   } catch (error) {
     consoleLog("Error addExpenseValidate:", error);
+
+    next(error);
+  }
+};
+
+export const editExpenseValidate = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { title, amount, date, note, category_id } = req.body;
+    const { id } = req.params;
+
+    const { user } = req;
+    if (!user) throw new CustomError("3005", {});
+
+    let errorArray: Record<string, string>[] = [];
+
+    if (!Value.Check(TypeBox_editExpense.body, req.body)) {
+      const errors = [...Value.Errors(TypeBox_addExpense.body, req.body)];
+
+      for (let x = 0; x < errors.length; x++) {
+        const dX = errors[x];
+
+        errorArray.push({
+          params: dX.path.split("/")[1],
+          error: dX.message,
+        });
+      }
+    }
+    if (!Value.Check(TypeBox_editExpense.params, req.params)) {
+      const errors = [...Value.Errors(TypeBox_editExpense.params, req.params)];
+
+      for (let x = 0; x < errors.length; x++) {
+        const dX = errors[x];
+
+        errorArray.push({
+          params: dX.path.split("/")[1],
+          error: dX.message,
+        });
+      }
+    }
+
+    const parseAmount = {
+      integer: amount.toString().split(".")[0],
+      decimal: amount.toString().split(".")[1] || "",
+    };
+    if (
+      amount <= 0 ||
+      parseAmount.integer.length > 8 ||
+      parseAmount.decimal.length > 2
+    ) {
+      errorArray.push({
+        params: "amount",
+        error: "Must be number as decimal(10,2) and greater than zero.",
+      });
+    }
+
+    if (category_id && !regexValidateUUID(category_id as string)) {
+      errorArray.push({
+        params: "category_id",
+        error: "Must be string of UUID.",
+      });
+    }
+    if (id && !regexValidateUUID(id as string)) {
+      errorArray.push({
+        params: "id",
+        error: "Must be string of UUID.",
+      });
+    }
+
+    if (errorArray.length > 0) {
+      throw new CustomError("2001", errorArray);
+    }
+
+    const [categoryData, expenseData] = await Promise.all([
+      categoryService.findOneCategory({ id: category_id, user_id: user.id }),
+      expenseService.findOneExpense({ id: id, user_id: user.id }),
+    ]);
+    if (categoryData === 0 || expenseData === 0)
+      throw new CustomError("4001", {});
+    if (!categoryData) throw new CustomError("3006", {});
+    if (!expenseData) throw new CustomError("3007", {});
+
+    req.category = categoryData;
+    req.expense = expenseData;
+
+    next();
+  } catch (error) {
+    consoleLog("Error editExpenseValidate:", error);
+
+    next(error);
+  }
+};
+
+export const deleteExpenseValidate = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const { user } = req;
+    if (!user) throw new CustomError("3005", {});
+
+    let errorArray: Record<string, string>[] = [];
+
+    if (!Value.Check(TypeBox_deleteExpense.params, req.params)) {
+      const errors = [
+        ...Value.Errors(TypeBox_deleteExpense.params, req.params),
+      ];
+
+      for (let x = 0; x < errors.length; x++) {
+        const dX = errors[x];
+
+        errorArray.push({
+          params: dX.path.split("/")[1],
+          error: dX.message,
+        });
+      }
+    }
+
+    if (id && !regexValidateUUID(id as string)) {
+      errorArray.push({
+        params: "id",
+        error: "Must be string of UUID.",
+      });
+    }
+
+    if (errorArray.length > 0) {
+      throw new CustomError("2001", errorArray);
+    }
+
+    const expenseData = await expenseService.findOneExpense({
+      id: id,
+      user_id: user.id,
+    });
+    if (expenseData === 0) throw new CustomError("4001", {});
+    if (!expenseData) throw new CustomError("3007", {});
+
+    req.expense = expenseData;
+
+    next();
+  } catch (error) {
+    consoleLog("Error deleteExpenseValidate:", error);
 
     next(error);
   }

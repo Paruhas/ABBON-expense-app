@@ -7,8 +7,15 @@ import {
 import {
   addExpenseValidate,
   getAllExpenseValidate,
+  editExpenseValidate,
+  deleteExpenseValidate,
 } from "../middleware/expense.middleware";
-import { getAllExpense, addExpense } from "../controller/expense.controller";
+import {
+  getAllExpense,
+  addExpense,
+  editExpense,
+  deleteExpense,
+} from "../controller/expense.controller";
 
 const expenseRoute = express.Router();
 
@@ -26,7 +33,19 @@ expenseRoute.post(
   addExpenseValidate,
   addExpense
 );
-expenseRoute.put("/:id", apiKeyAuthentication, validateUserToken);
-expenseRoute.delete("/:id", apiKeyAuthentication, validateUserToken);
+expenseRoute.put(
+  "/:id",
+  apiKeyAuthentication,
+  validateUserToken,
+  editExpenseValidate,
+  editExpense
+);
+expenseRoute.delete(
+  "/:id",
+  apiKeyAuthentication,
+  validateUserToken,
+  deleteExpenseValidate,
+  deleteExpense
+);
 
 export default expenseRoute;

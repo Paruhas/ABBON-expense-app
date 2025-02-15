@@ -21,6 +21,7 @@ export const TypeBox_getAllExpense = {
     category_id: Type.Optional(Type.String({ minLength: 5, maxLength: 50 })),
     start: Type.Optional(Type.String({ minLength: 1, maxLength: 20 })),
     end: Type.Optional(Type.String({ minLength: 1, maxLength: 20 })),
+    sort: Type.Optional(Type.String({ minLength: 1, maxLength: 20 })),
   }),
 };
 
@@ -29,7 +30,27 @@ export const TypeBox_addExpense = {
     title: Type.String({ minLength: 1, maxLength: 100 }),
     amount: Type.Number({ minLength: 4, maxLength: 30 }),
     date: Type.Number({ minLength: 5, maxLength: 20 }),
-    category_id: Type.String({ minLength: 1, maxLength: 50 }),
-    note: Type.Optional(Type.String({ minLength: 1, maxLength: 255 })),
+    category_id: Type.String({ minLength: 5, maxLength: 50 }),
+    note: Type.String({ maxLength: 255 }),
+  }),
+};
+
+export const TypeBox_editExpense = {
+  body: Type.Object({
+    title: Type.String({ minLength: 1, maxLength: 100 }),
+    amount: Type.Number({ minLength: 4, maxLength: 30 }),
+    date: Type.Number({ minLength: 5, maxLength: 20 }),
+    category_id: Type.String({ minLength: 5, maxLength: 50 }),
+    note: Type.String({ maxLength: 255 }),
+  }),
+
+  params: Type.Object({
+    id: Type.String({ minLength: 5, maxLength: 50 }),
+  }),
+};
+
+export const TypeBox_deleteExpense = {
+  params: Type.Object({
+    id: Type.String({ minLength: 5, maxLength: 50 }),
   }),
 };

@@ -1,4 +1,4 @@
-import e, { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import sequelize from "../model";
 import { categoryService } from "../service/category.service";
@@ -16,7 +16,7 @@ export const getAllExpense = async (
   next: NextFunction
 ) => {
   try {
-    const { page, limit, category_id, start, end } = req.query;
+    const { page, limit, category_id, start, end, sort, order } = req.query;
 
     const { user } = req;
     if (!user) throw new CustomError("3005", {});
@@ -44,11 +44,18 @@ export const getAllExpense = async (
         break;
     }
 
+    const optionsPayload: Record<string, any> = {
+      include: [{ model: Category, as: "category_data" }],
+    };
+    if (order) {
+      optionsPayload["order"] = order;
+    }
+
     const expenseData = await expenseService.findAllExpensePagination(
       wherePayload,
       Number(limit),
       offset,
-      { include: [{ model: Category, as: "category_data" }] }
+      optionsPayload
     );
     if (!expenseData) throw new CustomError("4001", {});
 
@@ -103,11 +110,99 @@ export const addExpense = async (
         date: createNewExpense.date,
         note: createNewExpense.note,
         category_id: createNewExpense.category_id,
-        user_id: createNewExpense.user_id,
       })
     );
   } catch (error) {
     consoleLog("Error addExpense:", error);
+    await transaction.rollback();
+
+    next(error);
+  }
+};
+
+export const editExpense = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { title, amount, date, note, category_id } = req.body;
+    const { id } = req.params;
+
+    const { user } = req;
+    if (!user) throw new CustomError("3005", {});
+    const { category } = req;
+    if (!category) throw new CustomError("3006", {});
+    const { expense } = req;
+    if (!expense) throw new CustomError("3007", {});
+
+    const editExpense = await expenseService.updateExpense(
+      {
+        title,
+        amount,
+        date,
+        note,
+        category_id: category.id as string,
+        user_id: user.id as string,
+      },
+      { id: expense.id, user_id: user.id },
+      { transaction: transaction }
+    );
+    if (!editExpense) throw new CustomError("4002", {});
+
+    await transaction.commit();
+
+    res.status(200).json(
+      responseFormat("0000", "success", "Put data success.", {
+        id: expense.id,
+        title: title,
+        amount: amount,
+        date: date,
+        note: note,
+        category_id: category.id,
+      })
+    );
+  } catch (error) {
+    consoleLog("Error editExpense:", error);
+    await transaction.rollback();
+
+    next(error);
+  }
+};
+
+export const deleteExpense = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { id } = req.params;
+
+    const { user } = req;
+    if (!user) throw new CustomError("3005", {});
+    const { expense } = req;
+    if (!expense) throw new CustomError("3007", {});
+
+    const deleteExpense = await expenseService.fakeDeleteExpense(
+      {
+        db_status: "inactive",
+      },
+      { id: expense.id, user_id: user.id },
+      { transaction: transaction }
+    );
+    if (!deleteExpense) throw new CustomError("4004", {});
+
+    await transaction.commit();
+
+    res
+      .status(200)
+      .json(responseFormat("0000", "success", "Delete data success.", {}));
+  } catch (error) {
+    consoleLog("Error deleteExpense:", error);
     await transaction.rollback();
 
     next(error);

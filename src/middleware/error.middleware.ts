@@ -3,6 +3,8 @@ import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { CustomError } from "../util/customError";
 import responseFormat from "../util/responseFormat";
 
+const ERRORS = require("../seeder/errors.json");
+
 export const errorMiddleware: ErrorRequestHandler = (
   err: Error | CustomError,
   req: Request,
@@ -15,117 +17,13 @@ export const errorMiddleware: ErrorRequestHandler = (
   let resMessage = "No message found.";
 
   if (err instanceof CustomError) {
-    switch (err.message) {
-      case "1001":
-        httpCode = 401;
-        resCode = "1001";
-        resMessage = "Invalid API key.";
-        break;
+    const errorDetail = ERRORS[err.message];
+    if (errorDetail) {
+      httpCode = errorDetail.httpCode;
+      resMessage = errorDetail.resMessage;
 
-      case "1002":
-        httpCode = 401;
-        resCode = "1002";
-        resMessage = "Unauthorized, invalid access token.";
-        break;
-
-      case "1003":
-        httpCode = 403;
-        resCode = "1003";
-        resMessage = "Forbidden, access token expire.";
-        break;
-
-      case "1004":
-        httpCode = 401;
-        resCode = "1004";
-        resMessage = "Unauthorized, invalid refresh token.";
-        break;
-
-      case "2001":
-        httpCode = 400;
-        resCode = "2001";
-        resData = err.resData;
-        resMessage = "Validate error.";
-        break;
-
-      case "2002":
-        httpCode = 400;
-        resCode = "2002";
-        resData = err.resData;
-        resMessage = "Invalid format.";
-        break;
-
-      case "3001":
-        httpCode = 400;
-        resCode = "3001";
-        resData = err.resData;
-        resMessage = "Duplicate data.";
-        break;
-
-      case "3002":
-        httpCode = 400;
-        resCode = "3002";
-        resData = err.resData;
-        resMessage = "Register fail.";
-        break;
-
-      case "3003":
-        httpCode = 400;
-        resCode = "3003";
-        resData = err.resData;
-        resMessage = "Login fail.";
-        break;
-
-      case "3004":
-        httpCode = 400;
-        resCode = "3004";
-        resData = err.resData;
-        resMessage = "Refresh fail.";
-        break;
-
-      case "3005":
-        httpCode = 400;
-        resCode = "3005";
-        resData = err.resData;
-        resMessage = "User not found.";
-        break;
-
-      case "3006":
-        httpCode = 400;
-        resCode = "3006";
-        resData = err.resData;
-        resMessage = "Category not found.";
-        break;
-
-      case "4001":
-        httpCode = 400;
-        resCode = "4001";
-        resData = err.resData;
-        resMessage = "GET data fail.";
-        break;
-
-      case "4002":
-        httpCode = 400;
-        resCode = "4002";
-        resData = err.resData;
-        resMessage = "POST data fail.";
-        break;
-
-      case "4003":
-        httpCode = 400;
-        resCode = "4003";
-        resData = err.resData;
-        resMessage = "PUT data fail.";
-        break;
-
-      case "4004":
-        httpCode = 400;
-        resCode = "4004";
-        resData = err.resData;
-        resMessage = "DELETE data fail.";
-        break;
-
-      default:
-        break;
+      resCode = err.message;
+      resData = err.resData;
     }
   }
 
