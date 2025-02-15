@@ -64,10 +64,10 @@ export const validateRefreshToken = async (
 ) => {
   try {
     const isValid = Value.Check(Type.String(), req.headers["x-refresh-token"]);
-
     if (!isValid) {
       throw new CustomError("1004", {});
     }
+
     const token = req.headers["x-refresh-token"] as unknown as string;
 
     const data = decodeJwt(token, "refresh");

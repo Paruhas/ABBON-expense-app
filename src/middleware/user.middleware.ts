@@ -16,10 +16,11 @@ export const validateUserRegister = async (
   try {
     const { email, password } = req.body;
 
+    let errorArray: Record<string, string>[] = [];
+
     const isValid = Value.Check(TypeBox_UserRegister.body, req.body);
     if (!isValid) {
       const errors = [...Value.Errors(TypeBox_UserRegister.body, req.body)];
-      let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
         const dX = errors[x];
@@ -29,12 +30,19 @@ export const validateUserRegister = async (
           error: dX.message,
         });
       }
-
-      throw new CustomError("2001", errorArray);
     }
 
     const isValidEmail = regexValidateEmail(email);
-    if (!isValidEmail) throw new CustomError("2002", ["email"]);
+    if (!isValidEmail) {
+      errorArray.push({
+        params: "email",
+        error: "Must be string in email format.",
+      });
+    }
+
+    if (errorArray.length > 0) {
+      throw new CustomError("2001", errorArray);
+    }
 
     const usernameExists = await userService.findOneUser({ email: email });
     if (usernameExists === 0) throw new CustomError("4001", {});
@@ -56,10 +64,11 @@ export const validateUserLogin = async (
   try {
     const { email, password } = req.body;
 
+    let errorArray: Record<string, string>[] = [];
+
     const isValid = Value.Check(TypeBox_UserRegister.body, req.body);
     if (!isValid) {
       const errors = [...Value.Errors(TypeBox_UserRegister.body, req.body)];
-      let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
         const dX = errors[x];
@@ -69,12 +78,19 @@ export const validateUserLogin = async (
           error: dX.message,
         });
       }
-
-      throw new CustomError("2001", errorArray);
     }
 
     const isValidEmail = regexValidateEmail(email);
-    if (!isValidEmail) throw new CustomError("2002", ["email"]);
+    if (!isValidEmail) {
+      errorArray.push({
+        params: "email",
+        error: "Must be string in email format.",
+      });
+    }
+
+    if (errorArray.length > 0) {
+      throw new CustomError("2001", errorArray);
+    }
 
     const userData = await userService.findOneUser(
       { email: email },

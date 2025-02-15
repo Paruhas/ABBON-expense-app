@@ -21,10 +21,11 @@ export const addCategoryValidate = async (
     const { user } = req;
     if (!user) throw new CustomError("3005", {});
 
+    let errorArray: Record<string, string>[] = [];
+
     const isValid = Value.Check(TypeBox_addCategory.body, req.body);
     if (!isValid) {
       const errors = [...Value.Errors(TypeBox_addCategory.body, req.body)];
-      let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
         const dX = errors[x];
@@ -34,7 +35,9 @@ export const addCategoryValidate = async (
           error: dX.message,
         });
       }
+    }
 
+    if (errorArray.length > 0) {
       throw new CustomError("2001", errorArray);
     }
 
@@ -65,10 +68,11 @@ export const editCategoryValidate = async (
     const { user } = req;
     if (!user) throw new CustomError("3005", {});
 
+    let errorArray: Record<string, string>[] = [];
+
     const isValid_body = Value.Check(TypeBox_editCategory.body, req.body);
     if (!isValid_body) {
       const errors = [...Value.Errors(TypeBox_editCategory.body, req.body)];
-      let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
         const dX = errors[x];
@@ -78,14 +82,11 @@ export const editCategoryValidate = async (
           error: dX.message,
         });
       }
-
-      throw new CustomError("2001", errorArray);
     }
 
     const isValid_params = Value.Check(TypeBox_editCategory.params, req.params);
     if (!isValid_params) {
       const errors = [...Value.Errors(TypeBox_editCategory.params, req.params)];
-      let errorArray: any[] = [];
 
       for (let x = 0; x < errors.length; x++) {
         const dX = errors[x];
@@ -95,7 +96,9 @@ export const editCategoryValidate = async (
           error: dX.message,
         });
       }
+    }
 
+    if (errorArray.length > 0) {
       throw new CustomError("2001", errorArray);
     }
 
