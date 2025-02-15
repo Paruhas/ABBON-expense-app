@@ -1,0 +1,569 @@
+{
+	"info": {
+		"_postman_id": "63ae9045-5d39-4a40-b00b-1074fb5157b9",
+		"name": "ABBON-expense-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14716635"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save token to environment\", function () {\r",
+									"    let response = pm.response.json(); \r",
+									"    let accessToken = response.res_data.accessToken\r",
+									"    let refreshToken = response.res_data.refreshToken\r",
+									"\r",
+									"    if (accessToken) {\r",
+									"        pm.environment.set(\"x-access-token\", accessToken); \r",
+									"    }\r",
+									"\r",
+									"    if (refreshToken) {\r",
+									"        pm.environment.set(\"x-refresh-token\", refreshToken); \r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"test@mail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save token to environment\", function () {\r",
+									"    let response = pm.response.json(); \r",
+									"    let accessToken = response.res_data.accessToken\r",
+									"    let refreshToken = response.res_data.refreshToken\r",
+									"\r",
+									"    if (accessToken) {\r",
+									"        pm.environment.set(\"x-access-token\", accessToken); \r",
+									"    }\r",
+									"\r",
+									"    if (refreshToken) {\r",
+									"        pm.environment.set(\"x-refresh-token\", refreshToken); \r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"test@mail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save token to environment\", function () {\r",
+									"    let response = pm.response.json(); \r",
+									"    let accessToken = response.res_data.accessToken\r",
+									"    let refreshToken = response.res_data.refreshToken\r",
+									"\r",
+									"    if (accessToken) {\r",
+									"        pm.environment.set(\"x-access-token\", accessToken); \r",
+									"    }\r",
+									"\r",
+									"    if (refreshToken) {\r",
+									"        pm.environment.set(\"x-refresh-token\", refreshToken); \r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "x-refresh-token",
+								"value": "{{x-refresh-token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/auth/refresh",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CATEGORY",
+			"item": [
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/category/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Bill\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/category/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Repair\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/category/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"category",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "034e9078-5d94-4c20-af7b-42140158bd99",
+									"description": "category.id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EXPENSE",
+			"item": [
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/expense/?page=1&limit=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"expense",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Item per page"
+								},
+								{
+									"key": "category_id",
+									"value": "92bc1ec5-5f5a-471d-b4ef-7e47951f7805",
+									"description": "category.id (Optional)",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "1739552400000",
+									"description": "Unix milisecond format (Optional)",
+									"disabled": true
+								},
+								{
+									"key": "end",
+									"value": "1739552400000",
+									"description": "Unix milisecond format (Optional)",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "%2Bcreated_at",
+									"description": "expesne field sort (Optional) [%2Bid = id ASC / -id = id DESC] %2B= + symbol",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Grocery Shopping\",\r\n    \"amount\": 100.00,\r\n    \"date\": 1739552400000, // unix milisecond from example => new Date('2025-02-15T00:00+07:00').getTime()\r\n    \"note\": \"Buy some food\",\r\n    \"category_id\": \"92bc1ec5-5f5a-471d-b4ef-7e47951f7805\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/expense/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"expense",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Bus\",\r\n    \"amount\": 20.00,\r\n    \"date\": 1739466000000, // unix milisecond from example => new Date('2025-02-15T00:00+07:00').getTime()\r\n    \"note\": \"Go to shopping mall\",\r\n    \"category_id\": \"bf6ec186-e5ad-4fcc-98cf-44319fba1fed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/expense/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"expense",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "expense.id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/expense/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"expense",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "expense.id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "REPORT",
+			"item": [
+				{
+					"name": "Expense Report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/report/expense?start=1738342800000&end=1739466000000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"report",
+								"expense"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "1738342800000",
+									"description": "Unix milisecond format"
+								},
+								{
+									"key": "end",
+									"value": "1739466000000",
+									"description": "Unix milisecond format"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{x-access-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
